@@ -65,22 +65,30 @@ public class Menu {
             }
             if (selection == 2) {
 
-                System.out.println("To login as a current user, please enter your assigned userID # from list below: ");
+                if (allUsers.size()<1)
+                {
 
-                for(int i=0; i<allUsers.size(); i++){
-                    System.out.println(allUsers.get(i));}
+                    System.out.println("Sorry, there are no users to become. Please create a new user using the menu below \n");
+                } else {
 
+
+                    System.out.println("To login as a current user, please enter your assigned userID # from list below: ");
+
+                    for (int i = 0; i < allUsers.size(); i++) {
+                        System.out.println(allUsers.get(i));
+                    }
+
+                    System.out.println("");
+
+                    tempUser = keyboard.nextInt();
+                    currentUser = tempUser;
+
+                    System.out.print("Welcome back, " + allUsers.get(currentUser-1).getUsername() +"\n");
+                    System.out.println("What would you like to do?");
+
+                    System.out.println("");
+                }
                 System.out.println("");
-
-                tempUser = keyboard.nextInt();
-                currentUser = tempUser;
-
-                System.out.print("Welcome back!\n");
-                System.out.println(allUsers.get(currentUser-1).getDirections());
-
-                System.out.println("");
-
-
                 menu();
 
 
@@ -88,7 +96,16 @@ public class Menu {
 
             if (selection == 3) {
 
-                addPost(allPosts,allUsers, currentUser, postOrder++, userName, userID, post, addLink);
+                if(currentUser==0){
+
+                    System.out.println("\n");
+                    System.out.println("Please login as a user to make a post \n");
+
+
+                } else{
+
+                addPost(allPosts,allUsers, currentUser, postOrder++, userName, userID, post, addLink);}
+
                 //postOrder++;
 
                 out.println("");
@@ -187,14 +204,9 @@ public class Menu {
     public static void addPost(ArrayList<Post> allPosts, ArrayList<User> allUsers, int currentUser, int postOrder, String userName, int userID, String post, String addLink ){
 
        Scanner keyboard = new Scanner(System.in);
-        if(currentUser==0){
-
-            System.out.println("Please login as a user to make a post \n");
 
 
-        }
 
-        else {
 
             userName = allUsers.get(currentUser - 1).getUsername();
 
@@ -212,7 +224,6 @@ public class Menu {
                 System.out.print(postOrder + " : ");
                 post = keyboard.nextLine();
 
-                System.out.println(userName);
 
                 System.out.println("Would you like to add any additional links?");
                 addLink = keyboard.nextLine();
@@ -227,11 +238,17 @@ public class Menu {
             } else {
 
                 int i = 0;
-                for (i = (allPosts.size() - 1); i >= 0; i--) {
-                    if (userName.equals(allPosts.get(i).getUsername())) {
-                        System.out.println(allPosts.get(i));
-                    }
-                }
+                for (i = (allPosts.size() - 1); i>=0; i--) {
+
+
+                        if (userName.equals(allPosts.get(i).getUsername())) {
+                            System.out.println(allPosts.get(i));
+                            break;
+                            }
+
+                        }
+
+
                 System.out.println("Hi " + userName + ", please enter post: ");
                 System.out.print(postOrder + " : ");
                 post = keyboard.nextLine();
@@ -255,4 +272,4 @@ public class Menu {
 
 
 
-}
+
